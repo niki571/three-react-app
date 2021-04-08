@@ -1,7 +1,4 @@
 module.exports = {
-    "globals": {
-        "requestAnimationFrame": false
-    },
     "env": {
         "browser": true,
         "es2021": true

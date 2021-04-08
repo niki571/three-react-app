@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import * as THREE from 'three'
 
 export default class ThreeExample extends Component {
@@ -16,7 +15,7 @@ export default class ThreeExample extends Component {
     scene.add(cube)
     camera.position.z = 5
     var animate = function () {
-      requestAnimationFrame(animate)
+      window.requestAnimationFrame(animate)
       cube.rotation.x += 0.01
       cube.rotation.y += 0.01
       renderer.render(scene, camera)
