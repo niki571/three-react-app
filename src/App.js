@@ -1,23 +1,24 @@
 import React from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from 'react-router-dom'
-import ThreeExample from './components/three'
+
 import './App.css'
 
 function App () {
   return (
-    <Router>
-      <div className='App'>
-        <Switch>
-          <Route exact path='/'>
-            <ThreeExample />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    // <Router>
+    //   <div className='App'>
+    //     <Switch>
+    //       <Route exact path='/cube'>
+    //         <Cube />
+    //       </Route>
+    //       <Route exact path='/sphere'>
+    //         <Sphere />
+    //       </Route>
+    //     </Switch>
+    //   </div>
+    // </Router>
+    <div>
+      123
+    </div>
 
   )
 }
