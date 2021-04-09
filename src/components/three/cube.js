@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { WIDTH, HEIGHT } from './config'
 
-export default class Cube extends Component {
-  componentDidMount () {
+export default function Cube () {
+  const divEl = useRef(null)
+  useEffect(() => {
     console.log('Using Three.js version: ' + THREE.REVISION)
     // === THREE.JS CODE START ===
     var scene = new THREE.Scene()
@@ -11,7 +12,7 @@ export default class Cube extends Component {
     var renderer = new THREE.WebGLRenderer()
     renderer.setSize(WIDTH, HEIGHT)
     // document.body.appendChild(renderer.domElement)
-    this.mount.appendChild(renderer.domElement)
+    divEl.current.appendChild(renderer.domElement)
     var geometry = new THREE.BoxGeometry(1, 1, 1)
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
     var cube = new THREE.Mesh(geometry, material)
@@ -25,10 +26,9 @@ export default class Cube extends Component {
     }
     animate()
     // === THREE.JS EXAMPLE CODE END ===
-  }
-  render () {
-    return (
-      <div ref={ref => (this.mount = ref)} />
-    )
-  }
+  }, [])
+
+  return (
+    <div ref={divEl} />
+  )
 }

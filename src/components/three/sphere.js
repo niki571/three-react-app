@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { WIDTH, HEIGHT } from './config'
 
-export default class Sphere extends Component {
-  componentDidMount () {
+export default function Sphere () {
+  const divEl = useRef(null)
+  useEffect(() => {
     // === THREE.JS CODE START ===
     // create a scene, that will hold all our elements such as objects, cameras and lights.
     var scene = new THREE.Scene()
@@ -67,15 +68,14 @@ export default class Sphere extends Component {
     camera.lookAt(scene.position)
 
     // add the output of the renderer to the html element
-    this.mount.appendChild(renderer.domElement)
+    divEl.current.appendChild(renderer.domElement)
 
     // render the scene
     renderer.render(scene, camera)
     // === THREE.JS EXAMPLE CODE END ===
-  }
-  render () {
-    return (
-      <div ref={ref => (this.mount = ref)} />
-    )
-  }
+  }, [])
+
+  return (
+    <div ref={divEl} />
+  )
 }
