@@ -1,7 +1,7 @@
 import React from 'react'
-import App from '../App'
-import Cube from '../components/three/cube'
-import Sphere from '../components/three/sphere'
+import App from '../components/app/App'
+import Cube from '../components/three/Cube'
+import Sphere from '../components/three/Sphere'
 
 const routes = [
   {
