@@ -1,16 +1,23 @@
 import React, { useEffect, useRef } from 'react'
+import {
+  useRouteMatch
+} from 'react-router-dom'
 import * as THREE from 'three'
 import { WIDTH, HEIGHT } from './config'
 
 export default function Cube () {
+  const { path } = useRouteMatch()
+  const width = path === '/' ? WIDTH : window.innerWidth
+  const height = path === '/' ? HEIGHT : window.innerHeight
+
   const divEl = useRef(null)
   useEffect(() => {
     console.log('Using Three.js version: ' + THREE.REVISION)
     // === THREE.JS CODE START ===
     var scene = new THREE.Scene()
-    var camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 0.1, 1000)
+    var camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
     var renderer = new THREE.WebGLRenderer()
-    renderer.setSize(WIDTH, HEIGHT)
+    renderer.setSize(width, height)
     // document.body.appendChild(renderer.domElement)
     divEl.current.appendChild(renderer.domElement)
     var geometry = new THREE.BoxGeometry(1, 1, 1)

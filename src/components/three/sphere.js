@@ -1,8 +1,15 @@
 import React, { useEffect, useRef } from 'react'
+import {
+  useRouteMatch
+} from 'react-router-dom'
 import * as THREE from 'three'
 import { WIDTH, HEIGHT } from './config'
 
 export default function Sphere () {
+  const { path } = useRouteMatch()
+  const width = path === '/' ? WIDTH : window.innerWidth
+  const height = path === '/' ? HEIGHT : window.innerHeight
+
   const divEl = useRef(null)
   useEffect(() => {
     // === THREE.JS CODE START ===
@@ -10,12 +17,12 @@ export default function Sphere () {
     var scene = new THREE.Scene()
 
     // create a camera, which defines where we're looking at.
-    var camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 1000)
+    var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000)
 
     // create a render and set the size
     var renderer = new THREE.WebGLRenderer()
     renderer.setClearColor(new THREE.Color(0x000000))
-    renderer.setSize(WIDTH, HEIGHT)
+    renderer.setSize(width, height)
 
     // show axes in the screen
     var axes = new THREE.AxesHelper(20)
