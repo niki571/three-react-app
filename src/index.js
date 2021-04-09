@@ -5,9 +5,9 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-import './index.css'
 import routes from './routes'
 import reportWebVitals from './reportWebVitals'
+import './index.css'
 
 ReactDOM.render(
   <React.StrictMode>
