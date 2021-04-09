@@ -5,12 +5,13 @@ import {
 import * as THREE from 'three'
 import { WIDTH, HEIGHT } from './config'
 
-export default function Cube () {
+export function Cube () {
   const { path } = useRouteMatch()
   const width = path === '/' ? WIDTH : window.innerWidth
   const height = path === '/' ? HEIGHT : window.innerHeight
 
   const divEl = useRef(null)
+
   useEffect(() => {
     console.log('Using Three.js version: ' + THREE.REVISION)
     // === THREE.JS CODE START ===

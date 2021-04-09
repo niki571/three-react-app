@@ -5,12 +5,13 @@ import {
 import * as THREE from 'three'
 import { WIDTH, HEIGHT } from './config'
 
-export default function Sphere () {
+export function Sphere () {
   const { path } = useRouteMatch()
   const width = path === '/' ? WIDTH : window.innerWidth
   const height = path === '/' ? HEIGHT : window.innerHeight
 
   const divEl = useRef(null)
+
   useEffect(() => {
     // === THREE.JS CODE START ===
     // create a scene, that will hold all our elements such as objects, cameras and lights.

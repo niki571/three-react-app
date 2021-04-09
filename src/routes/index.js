@@ -1,7 +1,6 @@
 import React from 'react'
 import App from '../components/app'
-import Cube from '../components/three/cube'
-import Sphere from '../components/three/sphere'
+import { Cube, Sphere, Light } from '../components/three'
 
 const routes = [
   {
@@ -16,6 +15,10 @@ const routes = [
   {
     path: '/sphere',
     main: <Sphere />
+  },
+  {
+    path: '/light',
+    main: <Light />
   }
 ]
 
