@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import * as THREE from 'three'
+import { WIDTH, HEIGHT } from './config'
 
-export default class ThreeExample extends Component {
+export default class Cube extends Component {
   componentDidMount () {
+    console.log('Using Three.js version: ' + THREE.REVISION)
     // === THREE.JS CODE START ===
     var scene = new THREE.Scene()
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    var camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 0.1, 1000)
     var renderer = new THREE.WebGLRenderer()
-    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setSize(WIDTH, HEIGHT)
     // document.body.appendChild(renderer.domElement)
     this.mount.appendChild(renderer.domElement)
     var geometry = new THREE.BoxGeometry(1, 1, 1)
