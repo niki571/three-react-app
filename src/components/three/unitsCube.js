@@ -6,11 +6,11 @@ import * as THREE from 'three'
 import { WIDTH, HEIGHT } from './config'
 
 export function UnitsCube () {
+  const divEl = useRef(null)
+
   const { path } = useRouteMatch()
   const width = path === '/' ? WIDTH : window.innerWidth
   const height = path === '/' ? HEIGHT : window.innerHeight
-
-  const divEl = useRef(null)
 
   useEffect(() => {
     // === THREE.JS CODE START ===
@@ -108,9 +108,8 @@ export function UnitsCube () {
   return (
     <div ref={divEl} />
   )
-}
 
-// function createBoundingWall (scene) {
+  // function createBoundingWall (scene) {
 //   var wallLeft = new THREE.BoxGeometry(70, 2, 2)
 //   var wallRight = new THREE.BoxGeometry(70, 2, 2)
 //   var wallTop = new THREE.BoxGeometry(2, 2, 50)
@@ -182,27 +181,28 @@ export function UnitsCube () {
    * Add the tree to the scene
    * @param scene The scene to add the tree to
    */
-function createTree (scene) {
-  var trunk = new THREE.BoxGeometry(1, 8, 1)
-  var leaves = new THREE.SphereGeometry(4)
+  function createTree (scene) {
+    var trunk = new THREE.BoxGeometry(1, 8, 1)
+    var leaves = new THREE.SphereGeometry(4)
 
     // create the mesh
-  var trunkMesh = new THREE.Mesh(trunk, new THREE.MeshLambertMaterial({
-    color: 0x8b4513
-  }))
-  var leavesMesh = new THREE.Mesh(leaves, new THREE.MeshLambertMaterial({
-    color: 0x00ff00
-  }))
+    var trunkMesh = new THREE.Mesh(trunk, new THREE.MeshLambertMaterial({
+      color: 0x8b4513
+    }))
+    var leavesMesh = new THREE.Mesh(leaves, new THREE.MeshLambertMaterial({
+      color: 0x00ff00
+    }))
 
     // position the trunk. Set y to half of height of trunk
-  trunkMesh.position.set(-10, 4, 0)
-  leavesMesh.position.set(-10, 12, 0)
+    trunkMesh.position.set(-10, 4, 0)
+    leavesMesh.position.set(-10, 12, 0)
 
-  trunkMesh.castShadow = true
-  trunkMesh.receiveShadow = true
-  leavesMesh.castShadow = true
-  leavesMesh.receiveShadow = true
+    trunkMesh.castShadow = true
+    trunkMesh.receiveShadow = true
+    leavesMesh.castShadow = true
+    leavesMesh.receiveShadow = true
 
-  scene.add(trunkMesh)
-  scene.add(leavesMesh)
+    scene.add(trunkMesh)
+    scene.add(leavesMesh)
+  }
 }
