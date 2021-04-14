@@ -5,7 +5,7 @@ import {
 import * as THREE from 'three'
 import { WIDTH, HEIGHT } from './config'
 
-export function Light () {
+export function UnitsCube () {
   const { path } = useRouteMatch()
   const width = path === '/' ? WIDTH : window.innerWidth
   const height = path === '/' ? HEIGHT : window.innerHeight
@@ -26,10 +26,10 @@ export function Light () {
     renderer.setSize(width, height)
     // renderer.shadowMap.enabled = true;
 
-    // createTree(scene)
-    // createHouse(scene);
-    // createGroundPlane(scene);
-    // createBoundingWall(scene);
+    createTree(scene)
+    // createHouse(scene)
+    // createGroundPlane(scene)
+    // createBoundingWall(scene)
 
     // create a cube
     var cubeGeometry = new THREE.BoxGeometry(4, 4, 4)
@@ -110,80 +110,80 @@ export function Light () {
   )
 }
 
-function createBoundingWall (scene) {
-  var wallLeft = new THREE.CubeGeometry(70, 2, 2)
-  var wallRight = new THREE.CubeGeometry(70, 2, 2)
-  var wallTop = new THREE.CubeGeometry(2, 2, 50)
-  var wallBottom = new THREE.CubeGeometry(2, 2, 50)
+// function createBoundingWall (scene) {
+//   var wallLeft = new THREE.BoxGeometry(70, 2, 2)
+//   var wallRight = new THREE.BoxGeometry(70, 2, 2)
+//   var wallTop = new THREE.BoxGeometry(2, 2, 50)
+//   var wallBottom = new THREE.BoxGeometry(2, 2, 50)
 
-  var wallMaterial = new THREE.MeshLambertMaterial({
-    color: 0xa0522d
-  })
+//   var wallMaterial = new THREE.MeshLambertMaterial({
+//     color: 0xa0522d
+//   })
 
-  var wallLeftMesh = new THREE.Mesh(wallLeft, wallMaterial)
-  var wallRightMesh = new THREE.Mesh(wallRight, wallMaterial)
-  var wallTopMesh = new THREE.Mesh(wallTop, wallMaterial)
-  var wallBottomMesh = new THREE.Mesh(wallBottom, wallMaterial)
+//   var wallLeftMesh = new THREE.Mesh(wallLeft, wallMaterial)
+//   var wallRightMesh = new THREE.Mesh(wallRight, wallMaterial)
+//   var wallTopMesh = new THREE.Mesh(wallTop, wallMaterial)
+//   var wallBottomMesh = new THREE.Mesh(wallBottom, wallMaterial)
 
-  wallLeftMesh.position.set(15, 1, -25)
-  wallRightMesh.position.set(15, 1, 25)
-  wallTopMesh.position.set(-19, 1, 0)
-  wallBottomMesh.position.set(49, 1, 0)
+//   wallLeftMesh.position.set(15, 1, -25)
+//   wallRightMesh.position.set(15, 1, 25)
+//   wallTopMesh.position.set(-19, 1, 0)
+//   wallBottomMesh.position.set(49, 1, 0)
 
-  scene.add(wallLeftMesh)
-  scene.add(wallRightMesh)
-  scene.add(wallBottomMesh)
-  scene.add(wallTopMesh)
-}
+//   scene.add(wallLeftMesh)
+//   scene.add(wallRightMesh)
+//   scene.add(wallBottomMesh)
+//   scene.add(wallTopMesh)
+// }
 
-function createGroundPlane (scene) {
-    // create the ground plane
-  var planeGeometry = new THREE.PlaneGeometry(70, 50)
-  var planeMaterial = new THREE.MeshLambertMaterial({
-    color: 0x9acd32
-  })
-  var plane = new THREE.Mesh(planeGeometry, planeMaterial)
-  plane.receiveShadow = true
+// function createGroundPlane (scene) {
+//     // create the ground plane
+//   var planeGeometry = new THREE.PlaneGeometry(70, 50)
+//   var planeMaterial = new THREE.MeshLambertMaterial({
+//     color: 0x9acd32
+//   })
+//   var plane = new THREE.Mesh(planeGeometry, planeMaterial)
+//   plane.receiveShadow = true
 
-    // rotate and position the plane
-  plane.rotation.x = -0.5 * Math.PI
-  plane.position.x = 15
-  plane.position.y = 0
-  plane.position.z = 0
+//     // rotate and position the plane
+//   plane.rotation.x = -0.5 * Math.PI
+//   plane.position.x = 15
+//   plane.position.y = 0
+//   plane.position.z = 0
 
-  scene.add(plane)
-}
+//   scene.add(plane)
+// }
 
-function createHouse (scene) {
-  var roof = new THREE.ConeGeometry(5, 4)
-  var base = new THREE.CylinderGeometry(5, 5, 6)
+// function createHouse (scene) {
+//   var roof = new THREE.ConeGeometry(5, 4)
+//   var base = new THREE.CylinderGeometry(5, 5, 6)
 
-    // create the mesh
-  var roofMesh = new THREE.Mesh(roof, new THREE.MeshLambertMaterial({
-    color: 0x8b7213
-  }))
-  var baseMesh = new THREE.Mesh(base, new THREE.MeshLambertMaterial({
-    color: 0xffe4c4
-  }))
+//     // create the mesh
+//   var roofMesh = new THREE.Mesh(roof, new THREE.MeshLambertMaterial({
+//     color: 0x8b7213
+//   }))
+//   var baseMesh = new THREE.Mesh(base, new THREE.MeshLambertMaterial({
+//     color: 0xffe4c4
+//   }))
 
-  roofMesh.position.set(25, 8, 0)
-  baseMesh.position.set(25, 3, 0)
+//   roofMesh.position.set(25, 8, 0)
+//   baseMesh.position.set(25, 3, 0)
 
-  roofMesh.receiveShadow = true
-  baseMesh.receiveShadow = true
-  roofMesh.castShadow = true
-  baseMesh.castShadow = true
+//   roofMesh.receiveShadow = true
+//   baseMesh.receiveShadow = true
+//   roofMesh.castShadow = true
+//   baseMesh.castShadow = true
 
-  scene.add(roofMesh)
-  scene.add(baseMesh)
-}
+//   scene.add(roofMesh)
+//   scene.add(baseMesh)
+// }
 
   /**
    * Add the tree to the scene
    * @param scene The scene to add the tree to
    */
 function createTree (scene) {
-  var trunk = new THREE.CubeGeometry(1, 8, 1)
+  var trunk = new THREE.BoxGeometry(1, 8, 1)
   var leaves = new THREE.SphereGeometry(4)
 
     // create the mesh
