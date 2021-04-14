@@ -10603,6 +10603,11 @@ text-table@0.2.0, text-table@^0.2.0:
   resolved "https://registry.npm.taobao.org/text-table/download/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
+three-trackballcontrols@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.npm.taobao.org/three-trackballcontrols/download/three-trackballcontrols-0.9.0.tgz#2c8be3627f50644d6dd60c10d23edd7fbfeffadd"
+  integrity sha1-LIvjYn9QZE1t1gwQ0j7df7/v+t0=
+
 three@^0.127.0:
   version "0.127.0"
   resolved "https://registry.npm.taobao.org/three/download/three-0.127.0.tgz?cache=0&sync_timestamp=1617195041772&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fthree%2Fdownload%2Fthree-0.127.0.tgz#c463f4d41b2c735dcf8e9e51a388815e80cd3791"

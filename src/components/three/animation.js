@@ -4,6 +4,8 @@ import {
 } from 'react-router-dom'
 import * as THREE from 'three'
 import Stats from 'stats.js'
+import * as dat from 'dat.gui'
+import TrackballControls from 'three-trackballcontrols'
 import { WIDTH, HEIGHT } from './config'
 
 export function Animation () {
@@ -93,16 +95,32 @@ export function Animation () {
     divEl.current.appendChild(renderer.domElement)
     // === THREE.JS EXAMPLE CODE END ===
     let step = 0
+    let trackballControls
+    if (path !== '/') {
+      var controls = new function () {
+        this.rotationSpeed = 0.02
+        this.bouncingSpeed = 0.03
+      }()
+
+      let gui = new dat.GUI()
+      gui.add(controls, 'rotationSpeed', 0, 0.5)
+      gui.add(controls, 'bouncingSpeed', 0, 0.5)
+
+      // attach them here, since appendChild needs to be called first
+      trackballControls = new TrackballControls(camera, renderer.domElement)
+    }
+
     function renderScene () {
       stats && stats.update()
+      trackballControls && trackballControls.update()
 
         // rotate the cube around its axes
-      cube.rotation.x += 0.02
-      cube.rotation.y += 0.02
-      cube.rotation.z += 0.02
+      cube.rotation.x += controls.rotationSpeed
+      cube.rotation.y += controls.rotationSpeed
+      cube.rotation.z += controls.rotationSpeed
 
         // bounce the sphere up and down
-      step += 0.04
+      step += controls.bouncingSpeed
       sphere.position.x = 20 + (10 * (Math.cos(step)))
       sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)))
 
