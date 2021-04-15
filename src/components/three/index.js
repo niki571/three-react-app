@@ -1,4 +1,5 @@
 export { Cube } from './cube'
+export { Cube2 } from './cube2'
 export { Sphere } from './sphere'
 export { UnitsCube } from './unitsCube'
 export { Animation } from './animation'

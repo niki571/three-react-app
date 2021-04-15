@@ -1,6 +1,6 @@
 import React from 'react'
 import App from '../components/app'
-import { Cube, Sphere, UnitsCube, Animation } from '../components/three'
+import { Cube, Cube2, Sphere, UnitsCube, Animation } from '../components/three'
 
 const routes = [
   {
@@ -11,6 +11,10 @@ const routes = [
   {
     path: '/cube',
     main: <Cube />
+  },
+  {
+    path: '/cube2',
+    main: <Cube2 />
   },
   {
     path: '/sphere',
