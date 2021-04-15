@@ -89,7 +89,10 @@ export function Animation () {
     spotLight.castShadow = true
     scene.add(spotLight)
 
-   // === THREE.JS EXAMPLE CODE END ===
+    // add the output of the renderer to the html element
+    stats && divEl.current.appendChild(stats.dom)
+    divEl.current.appendChild(renderer.domElement)
+    // === THREE.JS EXAMPLE CODE END ===
     let step = 0
     let trackballControls
     let controls = new function () {
@@ -101,12 +104,9 @@ export function Animation () {
       gui.add(controls, 'rotationSpeed', 0, 0.5)
       gui.add(controls, 'bouncingSpeed', 0, 0.5)
 
-     // attach them here, since appendChild needs to be called first
+      // attach them here, since appendChild needs to be called first
       trackballControls = new TrackballControls(camera, renderer.domElement)
     }
-    // add the output of the renderer to the html element
-    stats && divEl.current.appendChild(stats.dom)
-    divEl.current.appendChild(renderer.domElement)
 
     function renderScene () {
       stats && stats.update()
