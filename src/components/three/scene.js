@@ -24,6 +24,12 @@ export function Scene () {
     // === THREE.JS CODE START ===
     // create a scene, that will hold all our elements such as objects, cameras and lights.
     var scene = new THREE.Scene()
+    // fog
+    // scene.fog = new THREE.Fog(0xffffff, 10, 100)
+    // overrideMaterial
+    scene.overrideMaterial = new THREE.MeshLambertMaterial({
+      color: 0xffffff
+    })
 
     // create a camera, which defines where we're looking at.
     var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100)
