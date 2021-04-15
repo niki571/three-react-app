@@ -95,6 +95,7 @@ export function Animation () {
     // === THREE.JS EXAMPLE CODE END ===
     let step = 0
     let trackballControls
+    let clock
     let controls = new function () {
       this.rotationSpeed = 0.02
       this.bouncingSpeed = 0.03
@@ -106,11 +107,12 @@ export function Animation () {
 
       // attach them here, since appendChild needs to be called first
       trackballControls = new TrackballControls(camera, renderer.domElement)
+      clock = new THREE.Clock()
     }
 
     function renderScene () {
       stats && stats.update()
-      trackballControls && trackballControls.update()
+      trackballControls && trackballControls.update(clock.getDelta())
 
         // rotate the cube around its axes
       cube.rotation.x += controls.rotationSpeed
