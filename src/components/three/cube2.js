@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {
-  useRouteMatch
-} from 'react-router-dom'
+// import {
+//   useRouteMatch
+// } from 'react-router-dom'
 import * as THREE from 'three'
-import { WIDTH, HEIGHT } from './config'
+// import { WIDTH, HEIGHT } from './config'
+import styles from './cube2.module.css'
 
 export function Cube2 () {
+  // const { path } = useRouteMatch()
+  // const width = path === '/' ? WIDTH : window.innerWidth
+  // const height = path === '/' ? HEIGHT : window.innerHeight
+
   const mount = useRef(null)
   const [isAnimating, setAnimating] = useState(true)
   const controls = useRef(null)
@@ -84,5 +89,5 @@ export function Cube2 () {
     }
   }, [isAnimating])
 
-  return <div className='vis' ref={mount} onClick={() => setAnimating(!isAnimating)} />
+  return <div className={styles.cube2} ref={mount} onClick={() => setAnimating(!isAnimating)} />
 }
