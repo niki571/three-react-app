@@ -1,6 +1,6 @@
 import React from 'react'
 import App from '../components/app'
-import { Cube, Cube2, Sphere, UnitsCube, Animation, Scene, Geometry } from '../components/three'
+import { Cube, Cube2, Sphere, UnitsCube, Animation, Scene, Geometry, Controls } from '../components/three'
 
 const routes = [
   {
@@ -35,6 +35,10 @@ const routes = [
   {
     path: '/geometry',
     main: <Geometry />
+  },
+  {
+    path: '/controls',
+    main: <Controls />
   }
 ]
 
