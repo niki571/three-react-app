@@ -1,23 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react'
-// import {
-//   useRouteMatch
-// } from 'react-router-dom'
+import {
+  useRouteMatch
+} from 'react-router-dom'
 import * as THREE from 'three'
-// import { WIDTH, HEIGHT } from './config'
-import styles from './cube2.module.css'
+import { WIDTH, HEIGHT } from './config'
 
 export function Cube2 () {
-  // const { path } = useRouteMatch()
-  // const width = path === '/' ? WIDTH : window.innerWidth
-  // const height = path === '/' ? HEIGHT : window.innerHeight
+  const { path } = useRouteMatch()
+  let width = path === '/' ? WIDTH : window.innerWidth
+  let height = path === '/' ? HEIGHT : window.innerHeight
 
   const mount = useRef(null)
   const [isAnimating, setAnimating] = useState(true)
   const controls = useRef(null)
 
   useEffect(() => {
-    let width = mount.current.clientWidth
-    let height = mount.current.clientHeight
+    width = width || mount.current.clientWidth
+    height = height || mount.current.clientHeight
     let frameId
 
     const scene = new THREE.Scene()
@@ -60,7 +59,7 @@ export function Cube2 () {
     }
 
     const stop = () => {
-      cancelAnimationFrame(frameId)
+      window.cancelAnimationFrame(frameId)
       frameId = null
     }
 
@@ -73,7 +72,7 @@ export function Cube2 () {
     return () => {
       stop()
       window.removeEventListener('resize', handleResize)
-      mount.current.removeChild(renderer.domElement)
+      mount.current && mount.current.removeChild(renderer.domElement)
 
       scene.remove(cube)
       geometry.dispose()
@@ -89,5 +88,5 @@ export function Cube2 () {
     }
   }, [isAnimating])
 
-  return <div className={styles.cube2} ref={mount} onClick={() => setAnimating(!isAnimating)} />
+  return <div ref={mount} onClick={() => setAnimating(!isAnimating)} />
 }
