@@ -128,25 +128,21 @@ export function SpotLight () {
 
     // === THREE.JS EXAMPLE CODE END ===
 
-    var controls = new function () {
-      this.rotationSpeed = 0.03
-      this.bouncingSpeed = 0.03
-      this.ambientColor = ambiColor
-      this.pointColor = spotLight.color.getStyle()
-      this.intensity = 1
-      this.distance = 0
-      this.angle = 0.1
-      this.shadowDebug = false
-      this.castShadow = true
-      this.target = 'Plane'
-      this.stopMovingLight = false
-      this.penumbra = 0
-    }()
-
-    let trackballControls
-    let clock
-
-    if (path !== '/') {
+    function setupControls () {
+      var controls = new function () {
+        this.rotationSpeed = 0.03
+        this.bouncingSpeed = 0.03
+        this.ambientColor = ambiColor
+        this.pointColor = spotLight.color.getStyle()
+        this.intensity = 1
+        this.distance = 0
+        this.angle = 0.1
+        this.shadowDebug = false
+        this.castShadow = true
+        this.target = 'Plane'
+        this.stopMovingLight = false
+        this.penumbra = 0
+      }()
       var gui = new dat.GUI()
       gui.addColor(controls, 'ambientColor').onChange(function (e) {
         ambientLight.color = new THREE.Color(e)
@@ -198,11 +194,17 @@ export function SpotLight () {
         }
       })
 
-      gui.add(controls, 'stopMovingLight').onChange(function (e) {
-        console.log(3333)
-        controls.stopMovingLight = !e
-      })
+      gui.add(controls, 'stopMovingLight')
 
+      return controls
+    }
+
+    let trackballControls
+    let clock
+    let controls
+
+    if (path !== '/') {
+      controls = setupControls()
         // attach them here, since appendChild needs to be called first
       trackballControls = new TrackballControls(camera, renderer.domElement)
       clock = new THREE.Clock()
@@ -216,38 +218,40 @@ export function SpotLight () {
       stats && stats.update()
       trackballControls && trackballControls.update(clock.getDelta())
 
-      // rotate the cube around its axes
-      cube.rotation.x += controls.rotationSpeed
-      cube.rotation.y += controls.rotationSpeed
-      cube.rotation.z += controls.rotationSpeed
+      if (path !== '/') {
+        // rotate the cube around its axes
+        cube.rotation.x += controls.rotationSpeed
+        cube.rotation.y += controls.rotationSpeed
+        cube.rotation.z += controls.rotationSpeed
 
-    // bounce the sphere up and down
-      step += controls.bouncingSpeed
-      sphere.position.x = 20 + (10 * (Math.cos(step)))
-      sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)))
+        // bounce the sphere up and down
+        step += controls.bouncingSpeed
+        sphere.position.x = 20 + (10 * (Math.cos(step)))
+        sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)))
 
-    // move the light simulation
-    //   console.log(4444, controls.stopMovingLight)
-      if (!controls.stopMovingLight) {
-        if (phase > 2 * Math.PI) {
-          invert = invert * -1
-          phase -= 2 * Math.PI
-        } else {
-          phase += controls.rotationSpeed
+        // move the light simulation
+        if (!controls.stopMovingLight) {
+          if (phase > 2 * Math.PI) {
+            invert = invert * -1
+            phase -= 2 * Math.PI
+          } else {
+            phase += controls.rotationSpeed
+          }
+          sphereLightMesh.position.z = +(7 * (Math.sin(phase)))
+          sphereLightMesh.position.x = +(14 * (Math.cos(phase)))
+          sphereLightMesh.position.y = 15
+
+          if (invert < 0) {
+            var pivot = 14
+            sphereLightMesh.position.x = (invert * (sphereLightMesh.position.x - pivot)) + pivot
+          }
+
+          spotLight.position.copy(sphereLightMesh.position)
         }
-        sphereLightMesh.position.z = +(7 * (Math.sin(phase)))
-        sphereLightMesh.position.x = +(14 * (Math.cos(phase)))
-        sphereLightMesh.position.y = 15
 
-        if (invert < 0) {
-          var pivot = 14
-          sphereLightMesh.position.x = (invert * (sphereLightMesh.position.x - pivot)) + pivot
-        }
-
-        spotLight.position.copy(sphereLightMesh.position)
+        pp.update()
       }
 
-      pp.update()
       // render using requestAnimationFrame
       window.requestAnimationFrame(renderScene)
       renderer.render(scene, camera)
