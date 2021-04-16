@@ -70,17 +70,13 @@ export function AmbientLight () {
     divEl.current.appendChild(renderer.domElement)
 
     // === THREE.JS EXAMPLE CODE END ===
+    function setupControls () {
+      var controls = new function () {
+        this.intensity = ambientLight.intensity
+        this.ambientColor = ambientLight.color.getStyle()
+        this.disableSpotlight = false
+      }()
 
-    var controls = new function () {
-      this.intensity = ambientLight.intensity
-      this.ambientColor = ambientLight.color.getStyle()
-      this.disableSpotlight = false
-    }()
-
-    let trackballControls
-    let clock
-
-    if (path !== '/') {
       var gui = new dat.GUI()
       gui.add(controls, 'intensity', 0, 3, 0.1).onChange(function () {
         ambientLight.intensity = controls.intensity
@@ -91,7 +87,14 @@ export function AmbientLight () {
       gui.add(controls, 'disableSpotlight').onChange(function (e) {
         spotLight.visible = !e
       })
+      return controls
+    }
 
+    let trackballControls
+    let clock
+
+    if (path !== '/') {
+      setupControls()
         // attach them here, since appendChild needs to be called first
       trackballControls = new TrackballControls(camera, renderer.domElement)
       clock = new THREE.Clock()

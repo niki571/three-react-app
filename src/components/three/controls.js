@@ -75,36 +75,6 @@ export function Controls () {
     divEl.current.appendChild(renderer.domElement)
     // === THREE.JS EXAMPLE CODE END ===
 
-    var controls = new function () {
-      this.scaleX = 1
-      this.scaleY = 1
-      this.scaleZ = 1
-
-      this.positionX = 0
-      this.positionY = 4
-      this.positionZ = 0
-
-      this.rotationX = 0
-      this.rotationY = 0
-      this.rotationZ = 0
-
-      this.translateX = 0
-      this.translateY = 0
-      this.translateZ = 0
-
-      this.visible = true
-
-      this.translate = function () {
-        cube.translateX(controls.translateX)
-        cube.translateY(controls.translateY)
-        cube.translateZ(controls.translateZ)
-
-        controls.positionX = cube.position.x
-        controls.positionY = cube.position.y
-        controls.positionZ = cube.position.z
-      }
-    }()
-
     // 两种材质
     // var material = new THREE.MeshLambertMaterial({color: 0x44ff44})
     var geom = new THREE.BoxGeometry(5, 8, 3)
@@ -121,12 +91,38 @@ export function Controls () {
     cube.castShadow = true
     scene.add(cube)
 
-    let trackballControls
-    let clock
+    function setupControls () {
+      var controls = new function () {
+        this.scaleX = 1
+        this.scaleY = 1
+        this.scaleZ = 1
 
-    if (path !== '/') {
+        this.positionX = 0
+        this.positionY = 4
+        this.positionZ = 0
+
+        this.rotationX = 0
+        this.rotationY = 0
+        this.rotationZ = 0
+
+        this.translateX = 0
+        this.translateY = 0
+        this.translateZ = 0
+
+        this.visible = true
+
+        this.translate = function () {
+          cube.translateX(controls.translateX)
+          cube.translateY(controls.translateY)
+          cube.translateZ(controls.translateZ)
+
+          controls.positionX = cube.position.x
+          controls.positionY = cube.position.y
+          controls.positionZ = cube.position.z
+        }
+      }()
+
       var gui = new dat.GUI()
-
       let guiScale = gui.addFolder('scale')
       guiScale.add(controls, 'scaleX', 0, 5)
       guiScale.add(controls, 'scaleY', 0, 5)
@@ -165,6 +161,16 @@ export function Controls () {
       guiTranslate.add(controls, 'translate')
 
       gui.add(controls, 'visible')
+
+      return controls
+    }
+
+    let trackballControls
+    let clock
+    let controls
+
+    if (path !== '/') {
+      controls = setupControls()
       // attach them here, since appendChild needs to be called first
       trackballControls = new TrackballControls(camera, renderer.domElement)
       clock = new THREE.Clock()
@@ -173,16 +179,17 @@ export function Controls () {
     function renderScene () {
       stats && stats.update()
       trackballControls && trackballControls.update(clock.getDelta())
+      if (path !== '/') {
+        cube.visible = controls.visible
 
-      cube.visible = controls.visible
+        // 两种写法
+        // cube.rotation.x = controls.rotationX
+        // cube.rotation.y = controls.rotationY
+        // cube.rotation.z = controls.rotationZ
+        cube.rotation.set(controls.rotationX, controls.rotationY, controls.rotationZ)
 
-      // 两种写法
-      // cube.rotation.x = controls.rotationX
-      // cube.rotation.y = controls.rotationY
-      // cube.rotation.z = controls.rotationZ
-      cube.rotation.set(controls.rotationX, controls.rotationY, controls.rotationZ)
-
-      cube.scale.set(controls.scaleX, controls.scaleY, controls.scaleZ)
+        cube.scale.set(controls.scaleX, controls.scaleY, controls.scaleZ)
+      }
 
       // render using requestAnimationFrame
       window.requestAnimationFrame(renderScene)

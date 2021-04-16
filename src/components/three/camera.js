@@ -84,39 +84,44 @@ export function Camera () {
     stats && divEl.current.appendChild(stats.dom)
     divEl.current.appendChild(renderer.domElement)
     // === THREE.JS EXAMPLE CODE END ===
+    function setupControls () {
+      var controls = new function () {
+        this.perspective = 'Perspective'
+        this.switchCamera = function () {
+          if (camera instanceof THREE.PerspectiveCamera) {
+            camera = new THREE.OrthographicCamera(window.innerWidth / -16, window.innerWidth / 16, window.innerHeight / 16, window.innerHeight / -16, -200, 500)
+            camera.position.x = 120
+            camera.position.y = 60
+            camera.position.z = 180
+            camera.lookAt(scene.position)
 
-    var controls = new function () {
-      this.perspective = 'Perspective'
-      this.switchCamera = function () {
-        if (camera instanceof THREE.PerspectiveCamera) {
-          camera = new THREE.OrthographicCamera(window.innerWidth / -16, window.innerWidth / 16, window.innerHeight / 16, window.innerHeight / -16, -200, 500)
-          camera.position.x = 120
-          camera.position.y = 60
-          camera.position.z = 180
-          camera.lookAt(scene.position)
+            trackballControls = new TrackballControls(camera, renderer.domElement)
+            this.perspective = 'Orthographic'
+          } else {
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
+            camera.position.x = 120
+            camera.position.y = 60
+            camera.position.z = 180
 
-          trackballControls = new TrackballControls(camera, renderer.domElement)
-          this.perspective = 'Orthographic'
-        } else {
-          camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
-          camera.position.x = 120
-          camera.position.y = 60
-          camera.position.z = 180
-
-          camera.lookAt(scene.position)
-          trackballControls = new TrackballControls(camera, renderer.domElement)
-          this.perspective = 'Perspective'
+            camera.lookAt(scene.position)
+            trackballControls = new TrackballControls(camera, renderer.domElement)
+            this.perspective = 'Perspective'
+          }
         }
-      }
-    }()
+      }()
+
+      var gui = new dat.GUI()
+      gui.add(controls, 'switchCamera')
+      gui.add(controls, 'perspective').listen()
+
+      return controls
+    }
 
     let trackballControls
     let clock
 
     if (path !== '/') {
-      var gui = new dat.GUI()
-      gui.add(controls, 'switchCamera')
-      gui.add(controls, 'perspective').listen()
+      setupControls()
 
       // attach them here, since appendChild needs to be called first
       trackballControls = new TrackballControls(camera, renderer.domElement)
