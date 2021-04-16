@@ -68,6 +68,10 @@ export function Camera () {
       }
     }
 
+    var lookAtGeom = new THREE.SphereGeometry(2)
+    var lookAtMesh = new THREE.Mesh(lookAtGeom, new THREE.MeshLambertMaterial({color: 0x00ff00}))
+    scene.add(lookAtMesh)
+
     var directionalLight = new THREE.DirectionalLight(0xffffff, 0.7)
     directionalLight.position.set(-20, 40, 60)
     scene.add(directionalLight)
@@ -119,9 +123,18 @@ export function Camera () {
       clock = new THREE.Clock()
     }
 
+    let step = 0
+
     function renderScene () {
       stats && stats.update()
       trackballControls && trackballControls.update(clock.getDelta())
+
+      step += 0.02
+      if (camera instanceof THREE.Camera) {
+        var x = 10 + (100 * (Math.sin(step)))
+        camera.lookAt(new THREE.Vector3(x, 10, 0))
+        lookAtMesh.position.copy(new THREE.Vector3(x, 10, 0))
+      }
 
       // render using requestAnimationFrame
       window.requestAnimationFrame(renderScene)
