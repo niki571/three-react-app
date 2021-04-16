@@ -3,6 +3,7 @@ import {
   useRouteMatch
 } from 'react-router-dom'
 import * as THREE from 'three'
+import { SceneUtils } from 'three/examples/jsm/utils/SceneUtils.js'
 import Stats from 'stats.js'
 import * as dat from 'dat.gui'
 import TrackballControls from 'three-trackballcontrols'
@@ -86,7 +87,6 @@ export function Controls () {
       this.rotationX = 0
       this.rotationY = 0
       this.rotationZ = 0
-      this.scale = 1
 
       this.translateX = 0
       this.translateY = 0
@@ -105,17 +105,18 @@ export function Controls () {
       }
     }()
 
-    var material = new THREE.MeshLambertMaterial({color: 0x44ff44})
+    // 两种材质
+    // var material = new THREE.MeshLambertMaterial({color: 0x44ff44})
     var geom = new THREE.BoxGeometry(5, 8, 3)
 
-  // var materials = [
-  //   new THREE.MeshLambertMaterial({opacity: 0.8, color: 0x44ff44, transparent: true}),
-  //   new THREE.MeshBasicMaterial({color: 0x000000, wireframe: true})
-  // ];
+    var materials = [
+      new THREE.MeshLambertMaterial({opacity: 0.8, color: 0x44ff44, transparent: true}),
+      new THREE.MeshBasicMaterial({color: 0x000000, wireframe: true})
+    ]
 
-  // var cube = THREE.SceneUtils.createMultiMaterialObject(geom, materials);
+    var cube = SceneUtils.createMultiMaterialObject(geom, materials)
 
-    var cube = new THREE.Mesh(geom, material)
+    // var cube = new THREE.Mesh(geom, material)
     cube.position.y = 4
     cube.castShadow = true
     scene.add(cube)
@@ -136,10 +137,10 @@ export function Controls () {
       var contY = guiPosition.add(controls, 'positionY', -4, 20)
       var contZ = guiPosition.add(controls, 'positionZ', -10, 10)
 
+      // 第三种写法
       contX.listen()
       contX.onChange(function () {
         cube.position.x = controls.positionX
-            // cube.children[1].position.x = controls.positionX;
       })
 
       contY.listen()
@@ -158,7 +159,6 @@ export function Controls () {
       guiRotation.add(controls, 'rotationZ', -4, 4)
 
       let guiTranslate = gui.addFolder('translate')
-
       guiTranslate.add(controls, 'translateX', -10, 10)
       guiTranslate.add(controls, 'translateY', -10, 10)
       guiTranslate.add(controls, 'translateZ', -10, 10)
@@ -176,13 +176,15 @@ export function Controls () {
 
       cube.visible = controls.visible
 
-      cube.rotation.x = controls.rotationX
-      cube.rotation.y = controls.rotationY
-      cube.rotation.z = controls.rotationZ
+      // 两种写法
+      // cube.rotation.x = controls.rotationX
+      // cube.rotation.y = controls.rotationY
+      // cube.rotation.z = controls.rotationZ
+      cube.rotation.set(controls.rotationX, controls.rotationY, controls.rotationZ)
 
       cube.scale.set(controls.scaleX, controls.scaleY, controls.scaleZ)
 
-        // render using requestAnimationFrame
+      // render using requestAnimationFrame
       window.requestAnimationFrame(renderScene)
       renderer.render(scene, camera)
     }
