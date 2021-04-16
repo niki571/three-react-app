@@ -87,15 +87,11 @@ export function SpotLight () {
     var ambientLight = new THREE.AmbientLight(ambiColor)
     scene.add(ambientLight)
 
-  // add spotlight for a bit of light
+    // add spotlight for a bit of light
     var spotLight0 = new THREE.SpotLight(0xcccccc)
     spotLight0.position.set(-40, 30, -10)
     spotLight0.lookAt(plane)
     scene.add(spotLight0)
-
-  // add target and light
-    var target = new THREE.Object3D()
-    target.position.set(5, 0, 0)
 
     var spotLight = new THREE.SpotLight('#ffffff')
     spotLight.position.set(-40, 60, -10)
@@ -107,12 +103,14 @@ export function SpotLight () {
     spotLight.angle = 0.4
     spotLight.shadow.camera.fov = 120
     scene.add(spotLight)
+    // 查看阴影效果
     var debugCamera = new THREE.CameraHelper(spotLight.shadow.camera)
 
+    // 灯光辅助线
     var pp = new THREE.SpotLightHelper(spotLight)
     scene.add(pp)
 
-  // add a small sphere simulating the pointlight
+    // add a small sphere simulating the pointlight
     var sphereLight = new THREE.SphereGeometry(0.2)
     var sphereLightMaterial = new THREE.MeshBasicMaterial({
       color: 0xac6c25
@@ -159,7 +157,7 @@ export function SpotLight () {
       gui.add(controls, 'intensity', 0, 5).onChange(function (e) {
         spotLight.intensity = e
       })
-
+      // 强度下降速度
       gui.add(controls, 'penumbra', 0, 1).onChange(function (e) {
         spotLight.penumbra = e
       })
