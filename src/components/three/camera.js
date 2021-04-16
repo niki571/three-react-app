@@ -114,8 +114,6 @@ export function Camera () {
       gui.add(controls, 'switchCamera')
       gui.add(controls, 'perspective').listen()
 
-    //   camera.lookAt(scene.position)
-
       // attach them here, since appendChild needs to be called first
       trackballControls = new TrackballControls(camera, renderer.domElement)
       clock = new THREE.Clock()
