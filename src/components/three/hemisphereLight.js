@@ -40,26 +40,35 @@ export function HemisphereLight () {
     renderer.shadowMap.enabled = true
 
     // create the ground plane
+    let texturePromise = new Promise((resolve) => {
+      new THREE.TextureLoader().load('./grasslight-big.jpeg',
+        texture => {
+          resolve(texture)
+        })
+    })
+
     let textureGrass
-    new THREE.TextureLoader().load('./grasslight-big.jpeg',
-    (texture) => {
-      console.log(888, texture)
+    let planeGeometry
+    let planeMaterial
+    let plane
+    texturePromise.then(texture => {
+      console.log(8888, texture)
       textureGrass = texture
       textureGrass.wrapS = THREE.RepeatWrapping
       textureGrass.wrapT = THREE.RepeatWrapping
       textureGrass.repeat.set(10, 10)
-    })
 
-    var planeGeometry = new THREE.PlaneGeometry(1000, 1000, 20, 20)
-    var planeMaterial = new THREE.MeshLambertMaterial({
-      map: textureGrass
+      planeMaterial = new THREE.MeshLambertMaterial({
+        map: textureGrass
+      })
+      plane = new THREE.Mesh(planeGeometry, planeMaterial)
     })
-
-    //        var planeMaterial = new THREE.MeshLambertMaterial();
-    var plane = new THREE.Mesh(planeGeometry, planeMaterial)
+    planeGeometry = new THREE.PlaneGeometry(500, 500, 20, 20)
+    plane = new THREE.Mesh(planeGeometry, planeMaterial)
+    // var planeMaterial = new THREE.MeshLambertMaterial();
     plane.receiveShadow = true
 
-    // rotate and position the plane
+   // rotate and position the plane
     plane.rotation.x = -0.5 * Math.PI
     plane.position.x = 15
     plane.position.y = 0
