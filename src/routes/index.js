@@ -1,7 +1,7 @@
 import React from 'react'
 import App from '../components/app'
 import { Cube, Cube2, Sphere, UnitsCube, Animation, Scene, Geometry, Controls, Camera,
-  AmbientLight, SpotLight, PointLight, DirectionalLight
+  AmbientLight, SpotLight, PointLight, DirectionalLight, HemisphereLight
  } from '../components/three'
 
 const routes = [
@@ -61,6 +61,10 @@ const routes = [
   {
     path: '/directionalLight',
     main: <DirectionalLight />
+  },
+  {
+    path: '/hemisphereLight',
+    main: <HemisphereLight />
   }
 ]
 
